@@ -1,0 +1,5 @@
+export const renderCapitalize = (value) => {
+    return (
+        <div className="capitalize">{value || '-'}</div>
+    );
+};
