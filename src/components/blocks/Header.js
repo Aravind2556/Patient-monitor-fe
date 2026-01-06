@@ -22,7 +22,6 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
-import Logo from '../../assets/Logo.png'
 import { DContext } from '../../context/Datacontext'
 import { renderImgUrl } from '../../utils/renderImgUrl'
 
@@ -53,11 +52,7 @@ export default function Example() {
         <div className="flex lg:flex-1">
           <a href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
-            <img
-              alt="App Logo"
-              src={Logo}
-              className="h-[80px] w-auto"
-            />
+            <span className='font-black text-sm text-primary-700'>Varicose Monitoring</span>
           </a>
         </div>
         <div className="flex lg:hidden">
@@ -120,7 +115,7 @@ export default function Example() {
 
               <button
 
-                className="w-[100px] h-[38px] text-white text-sm md:text-[16px] bg-primary-300 rounded-md bg-[#2c25c4]"
+                className="w-[100px] h-[38px] text-white text-sm md:text-[16px] bg-primary-700 rounded-md"
                 onClick={() => window.location.href = "/signin"}
               >
                 Register
