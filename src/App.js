@@ -5,8 +5,9 @@ import Register from './components/pages/Register';
 import { useContext } from 'react';
 import { DContext } from './context/Datacontext';
 import LoadingPage from './components/pages/Loading';
-import Home from './components/pages/DoctorHomePage';
+import Home from './components/pages/Dashboard';
 import Header from './components/blocks/Header';
+import NotFound from './components/pages/NotFound';
 
 
 function App() {
@@ -19,12 +20,12 @@ function App() {
 
   return (
     <div className="container-fluid p-0">
-      {isAuth && <Header />}
+      <Header />
       <Routes>
         <Route path="/" element={isAuth ? <Home /> : <Login />} />
         <Route path="/login" element={isAuth ? <Home /> : <Login />} />
         <Route path='/register' element={isAuth ? <Home /> : <Register />} />
-        <Route path='/test' element={<LoadingPage />} />
+        <Route path='*' element={<NotFound/>} />
       </Routes>
 
     </div>
