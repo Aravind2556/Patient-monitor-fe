@@ -5,13 +5,16 @@ import Register from './components/pages/Register';
 import { useContext } from 'react';
 import { DContext } from './context/Datacontext';
 import LoadingPage from './components/pages/Loading';
-import Home from './components/pages/Home';
+import Home from './components/pages/DoctorHomePage';
 import Header from './components/blocks/Header';
+import { PatientChart } from './components/pages/PatientChart';
+import { Alert } from './components/pages/Alert';
+import { Session } from './components/pages/Session';
 
 
 function App() {
 
-  const {isAuth, currentUser} = useContext(DContext)
+  const { isAuth, currentUser } = useContext(DContext)
 
 //   if(isAuth===null || !currentUser){
 //     return <LoadingPage/>
@@ -19,14 +22,17 @@ function App() {
 
   return (
     <div className="container-fluid p-0">
-      <Header/>
+      <Header />
       <Routes>
-        <Route path="/" element={isAuth?<Home/>:<Login/>} />
-        <Route path="/login" element={isAuth?<Home/>:<Login/>} />
-        <Route path='/register' element={isAuth?<Home/>:<Register/>} />
-        <Route path='/test' element={<LoadingPage/>} />
+        <Route path="/" element={isAuth ? <Home /> : <Login />} />
+        <Route path="/login" element={isAuth ? <Home /> : <Login />} />
+        <Route path='/register' element={isAuth ? <Home /> : <Register />} />
+        <Route path='/test' element={<LoadingPage />} />
+        <Route path='/patient-chart' element={<PatientChart />} />
+        <Route path='/alert' element={<Alert />} />
+        <Route path='/session' element={<Session />} />
       </Routes>
-     
+
     </div>
   );
 }
