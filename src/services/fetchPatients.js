@@ -73,3 +73,24 @@ export const editPatientList = async ({ BeURL, editPatient, id, setEditPatient }
 }
 
 
+export const deletePatient = async ({ BeURL, id }) => {
+    try {
+        const res = await fetch(`${BeURL}/delete-patient/${id}`, {
+            method: 'DELETE',
+            credentials: 'include',
+
+        })
+        const data = await res.json()
+        if (data.success) {
+            alert(data.message)
+            window.location.reload();
+
+        } else {
+            alert(data.message)
+        }
+    }
+    catch (err) {
+        console.error("Error in fetch patients:", err);
+        alert("Failed to fetch patients", err);
+    }
+}

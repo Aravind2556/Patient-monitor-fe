@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { DContext } from '../../context/Datacontext';
-import { editPatientList, fetchAllPatients, fetchPatient } from '../../services/fetchPatients';
+import { deletePatient, editPatientList, fetchAllPatients, fetchPatient } from '../../services/fetchPatients';
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { FaEye } from "react-icons/fa";
 import { FaRegEdit } from "react-icons/fa";
@@ -54,6 +54,10 @@ function DoctorHomePage() {
     await fetchPatient({ BeURL, setEditPatient, id })
     setViewPatient(false)
     setShowPatient(false)
+  }
+
+  const handleDelete = async (id) => {
+    await deletePatient({ BeURL, id })
   }
 
 
@@ -129,7 +133,7 @@ function DoctorHomePage() {
                       <MdOutlineDeleteOutline
                         className="text-lg text-red-500 cursor-pointer"
                         title="Delete Job"
-                      // onClick={() => handleDelete(pat._id)}
+                        onClick={() => handleDelete(pat._id)}
                       />
                     )}
 
