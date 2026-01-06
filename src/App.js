@@ -13,9 +13,9 @@ function App() {
 
   const {isAuth, currentUser} = useContext(DContext)
 
-  if(isAuth===null || !currentUser){
-    return <LoadingPage/>
-  }
+//   if(isAuth===null || !currentUser){
+//     return <LoadingPage/>
+//   }
 
   return (
     <div className="container-fluid p-0">
