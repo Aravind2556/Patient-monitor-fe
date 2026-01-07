@@ -28,7 +28,7 @@ export const HeatTherapy = () => {
         <div>
             {/* Scrollable Table */}
             <div className='flex justify-between items-center font-semibold mb-4'>
-                <h2 className='text-xl'>Heart therapy</h2>
+                <h2 className='text-xl'>Heat Therapy</h2>
                 <button onClick={() => VibratioDownload(currentUser?.id)} className='bg-primary-700 text-white px-4 py-2 rounded-xl'>Download</button>
             </div>
             <div className="overflow-x-auto bg-white rounded-xl shadow-md max-h-72 overflow-y-auto">
@@ -46,7 +46,7 @@ export const HeatTherapy = () => {
                         <tbody>
                             {heatTherpyHistory?.length > 0 ? heatTherpyHistory.map((vib, idx) => (
                                 <tr
-                                    key={vib.sessionId}
+                                    key={vib.SessionId}
                                     className="hover:bg-gray-50 transition border-b border-slate-100 font-semibold"
                                 >
                                     <td className="p-3 text-center whitespace-nowrap border">{vib.SessionId}</td>

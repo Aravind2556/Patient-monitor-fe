@@ -108,7 +108,7 @@ export default function Example() {
             <div className='flex gap-4'><button
 
               className="w-[100px] h-[38px] text-sm md:text-[16px] text-[#2c25c4] border border-[#2C25C4] rounded-md bg-white"
-              onClick={() => window.location.href = "/signin"}
+              onClick={() => window.location.href = "/login"}
             >
               Login
             </button>
@@ -116,7 +116,7 @@ export default function Example() {
               <button
 
                 className="w-[100px] h-[38px] text-white text-sm md:text-[16px] bg-primary-700 rounded-md"
-                onClick={() => window.location.href = "/signin"}
+                onClick={() => window.location.href = "/register"}
               >
                 Register
               </button>
