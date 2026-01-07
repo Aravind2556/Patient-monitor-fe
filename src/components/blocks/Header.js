@@ -22,7 +22,6 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
-import { IoLogOut } from "react-icons/io5";
 import { DContext } from '../../context/Datacontext'
 import { renderImgUrl } from '../../utils/renderImgUrl'
 
@@ -36,7 +35,7 @@ const products = [
 
 const accountOptions = [
 
-  { name: 'Logout', description: '', href: '/logout', icon: IoLogOut },
+  { name: 'Logout', description: '', href: '/logout', icon: Bars3Icon },
 ]
 const callsToAction = [
   { name: 'Watch demo', href: '#', icon: PlayCircleIcon },

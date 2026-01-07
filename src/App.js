@@ -7,6 +7,9 @@ import { DContext } from './context/Datacontext';
 import LoadingPage from './components/pages/Loading';
 import DoctorDashboard from './components/pages/DoctorDashboard';
 import Header from './components/blocks/Header';
+import { PatientChart } from './components/pages/PatientChart';
+import { Alert } from './components/pages/Alert';
+import { Session } from './components/pages/Session';
 import NotFound from './components/pages/NotFound';
 import PatientDashboard from './components/pages/PatientDashboard';
 
@@ -15,9 +18,9 @@ function App() {
 
   const { isAuth, currentUser } = useContext(DContext)
 
-  if (isAuth === null || !currentUser) {
-    return <LoadingPage />
-  }
+//   if(isAuth===null || !currentUser){
+//     return <LoadingPage/>
+//   }
 
   const renderHomepage = () => {
     if(isAuth){
@@ -25,7 +28,7 @@ function App() {
         return <DoctorDashboard />
       }
       else if(currentUser.role === 'patient'){
-        return <PatientDashboard/>
+        return <PatientChart />
       }
     }
     return <Login />
@@ -38,6 +41,8 @@ function App() {
         <Route path="/" element={renderHomepage()} />
         <Route path="/login" element={renderHomepage()} />
         <Route path='/register' element={renderHomepage()} />
+        <Route path='/alerts' element={<Alert />} />
+        <Route path='/live-therapy' element={<Session />} />
         <Route path='*' element={<NotFound/>} />
       </Routes>
 
