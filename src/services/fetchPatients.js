@@ -1,20 +1,27 @@
 export const fetchAllPatients = async ({ BeURL, setAllPatient }) => {
     try {
         const res = await fetch(`${BeURL}/doctor/patient-detail`, {
-            method: 'GET',
-            credentials: 'include',
-
+            credentials: 'include'
         })
+
         const data = await res.json()
+
         if (data.success) {
             setAllPatient(data.patients)
         } else {
-            alert(data.message)
+            console.warn('Fetch patients - not successful:', data);
+            // Don't alert if it's just "Please login" - user might be logging in
+            if (!data.message?.includes('login')) {
+                alert(data.message)
+            }
         }
     }
     catch (err) {
-        console.error("Error in fetch patients:", err);
-        alert("Failed to fetch patients", err);
+        console.error("Error in fetch patients:", err?.message || err);
+        // Only alert if it's not a network error during login
+        if (err?.message && !err.message.includes('Failed to fetch')) {
+            alert("Failed to fetch patients. Please try again.");
+        }
     }
 }
 
