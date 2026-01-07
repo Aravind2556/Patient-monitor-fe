@@ -10,7 +10,7 @@ export const Vibration = () => {
 
     useEffect(() => {
         if (BeURL) {
-            fetch(`${BeURL}/fetchVibration/${currentUser.id}?isDownload=${false}`, {
+            fetch(`${BeURL}/fetchVibration/${currentUser.id}`, {
                 method: 'GET',
                 credentials: 'include'
             })
@@ -23,11 +23,11 @@ export const Vibration = () => {
                         alert(data.message)
                 })
         }
-    }, [BeURL, currentUser])
+    }, [BeURL])
 
 
     const VibratioDownload = async (id) => {
-        await vibrationDownload({ BeURL, id, isDownload: true,type : 'vibration' })
+        await vibrationDownload({ BeURL, id, type: 'vibration' })
     }
 
     return (
@@ -51,6 +51,7 @@ export const Vibration = () => {
                             </tr>
                         </thead>
                         <tbody>
+                            {console.log("vibrationHistory", vibrationHistory)}
                             {vibrationHistory?.length > 0 ? vibrationHistory.map((vib, idx) => (
                                 <tr
                                     key={vib.sessionId}

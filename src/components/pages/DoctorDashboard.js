@@ -67,7 +67,7 @@ function DoctorHomePage() {
 
   // Download Vibration
   const VibratioDownload = async (id, type,) => {
-    await vibrationDownload({ BeURL, id, isDownload: true, type })
+    await vibrationDownload({ BeURL, id,  type })
   }
 
   // Download Heat Therapy

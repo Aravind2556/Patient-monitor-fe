@@ -27,7 +27,7 @@ export const Compressor = () => {
 
   const VibratioDownload = async (id, type) => {
     console.log("id", id, type)
-    await vibrationDownload({ BeURL, id, isDownload: true, type })
+    await vibrationDownload({ BeURL, id,  type })
   }
 
 

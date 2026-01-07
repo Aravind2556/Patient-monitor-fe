@@ -1,8 +1,8 @@
-export const vibrationDownload = async ({ BeURL, id, isDownload, type }) => {
+export const vibrationDownload = async ({ BeURL, id, type }) => {
 
-    if (type === "vibration" && isDownload) {
+    if (type === "vibration") {
         try {
-            const res = await fetch(`${BeURL}/fetchVibration/${id}?isDownload=${isDownload}`, {
+            const res = await fetch(`${BeURL}/fetchVibration/${id}?download=excel`, {
                 method: 'GET',
                 credentials: 'include'
             });
@@ -10,9 +10,22 @@ export const vibrationDownload = async ({ BeURL, id, isDownload, type }) => {
             if (!res.ok) {
                 throw new Error('Failed to download Excel');
             }
+            // Check if response is actually an Excel file
+            const contentType = res.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
+                // Backend returned JSON (likely an error), not Excel
+                const data = await res.json();
+                alert(data.message || 'No Vibration data available for download');
+                return;
+            }
 
             const blob = await res.blob();
 
+            // Verify blob is not empty or too small
+            if (blob.size < 100) {
+                alert('No Vibration data available for this patient');
+                return;
+            }
             // Create download link
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -78,7 +91,7 @@ export const vibrationDownload = async ({ BeURL, id, isDownload, type }) => {
             alert("Failed to download Excel file: " + err.message);
         }
     }
-    else if (type === "compress" && isDownload) {
+    else if (type === "compress") {
         try {
             // Request Excel by passing download=excel according to backend contract
             const res = await fetch(`${BeURL}/fetchcompressor/${id}?download=excel`, {
