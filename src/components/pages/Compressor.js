@@ -17,8 +17,9 @@ export const Compressor = () => {
                 if (data.success) {
                   setCompressionHistory(data.patientCompression)
                 }
-                else
-                  alert(data.message)
+                else{
+                  console.log(data.message)
+                }
               })
           }
       }, [BeURL])

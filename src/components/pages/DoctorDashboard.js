@@ -63,8 +63,8 @@ function DoctorHomePage() {
 
 
   // Download Vibration
-  const VibratioDownload = async (id) => {
-    await vibrationDownload({ BeURL, id })
+  const VibratioDownload = async (id,type) => {
+    await vibrationDownload({ BeURL, id ,type })
   }
 
   return (
@@ -143,6 +143,7 @@ function DoctorHomePage() {
                       />
                     )}
                     <button
+                      onClick={() => VibratioDownload(pat.id , 'compress')}
                       className='flex items-center justify-center px-2 py-2.5 bg-gradient-to-r from-sky-500 to-sky-600 hover:from-sky-700 hover:to-sky-600 text-white font-bold text-sm rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 active:scale-95  gap-2 w-full md:w-auto'
                     >
                       <HiDownload className='text-base' />
