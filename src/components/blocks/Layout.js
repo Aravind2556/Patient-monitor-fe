@@ -89,6 +89,34 @@ function Layout({ children }) {
         }
     }, [thinkSpeakURL, currentUser, isAuth])
 
+    // Fetch device statuses (compressor/heater/vibrator) from ThingSpeak channel 3220683
+    // Uses the last entry's field1, field2, field3 where "1" indicates ON/true
+    useEffect(() => {
+        const statusURL = 'https://api.thingspeak.com/channels/3220683/feeds.json?api_key=3D0IZSLC23R5ZK3B';
+        const fetchStatus = () => {
+            fetch(statusURL)
+                .then(res => res.json())
+                .then(data => {
+                    const feeds = data?.feeds || [];
+                    const last = feeds.length > 0 ? feeds[feeds.length - 1] : null;
+                    if (last) {
+                        setCompressorStatus(last.field1 === "1");
+                        setHeaterStatus(last.field2 === "1");
+                        setVibratorStatus(last.field3 === "1");
+                    }
+                })
+                .catch(err => {
+                    console.log("Error fetching device statuses from ThinkSpeak:", err);
+                });
+        };
+
+        if (isAuth) {
+            fetchStatus();
+            const intervalId = setInterval(fetchStatus, 8000);
+            return () => clearInterval(intervalId);
+        }
+    }, [isAuth]);
+
     useEffect(() => {
         if (switchesDisabled && countdown > 0) {
             const timer = setTimeout(() => setCountdown(countdown - 1), 1000)
@@ -101,17 +129,22 @@ function Layout({ children }) {
     const toggleSwitches = (type, status) => {
         if (switchesDisabled) return;
 
+        const next = !status;
+
         let queryParams = "";
 
         switch (type) {
             case "compressor":
-                queryParams = `&field1=${status ? 1 : 0}`;
+                setCompressorStatus(next);
+                queryParams = `&field1=${next ? 1 : 0}`;
                 break;
             case "heater":
-                queryParams = `&field2=${status ? 1 : 0}`;
+                setHeaterStatus(next);
+                queryParams = `&field2=${next ? 1 : 0}`;
                 break;
             case "vibrator":
-                queryParams = `&field3=${status ? 1 : 0}`;
+                setVibratorStatus(next);
+                queryParams = `&field3=${next ? 1 : 0}`;
                 break;
             default:
                 return;
@@ -124,15 +157,40 @@ function Layout({ children }) {
             .then(res => res.json())
             .then(data => {
                 console.log("ThinkSpeak update response:", data);
-                if (data > 0) {
-                    // Success
-                }
-                else {
+                if (!(data > 0)) {
                     alert("Failed to update device status!");
+                    // revert state if failed
+                    switch (type) {
+                        case "compressor":
+                            setCompressorStatus(status);
+                            break;
+                        case "heater":
+                            setHeaterStatus(status);
+                            break;
+                        case "vibrator":
+                            setVibratorStatus(status);
+                            break;
+                        default:
+                            break;
+                    }
                 }
             })
             .catch(err => {
                 console.log("Error updating ThinkSpeak:", err);
+                // revert on error
+                switch (type) {
+                    case "compressor":
+                        setCompressorStatus(status);
+                        break;
+                    case "heater":
+                        setHeaterStatus(status);
+                        break;
+                    case "vibrator":
+                        setVibratorStatus(status);
+                        break;
+                    default:
+                        break;
+                }
             });
     }
 
@@ -174,8 +232,8 @@ function Layout({ children }) {
                                 href={item.href}
                                 onClick={() => setActiveNav(item.href)}
                                 className={`flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all ${isActive
-                                        ? 'bg-primary-700 text-white shadow-lg shadow-primary-200'
-                                        : 'text-slate-700 hover:bg-slate-100'
+                                    ? 'bg-primary-700 text-white shadow-lg shadow-primary-200'
+                                    : 'text-slate-700 hover:bg-slate-100'
                                     }`}
                             >
                                 <Icon className="text-xl" />
@@ -287,8 +345,8 @@ function Layout({ children }) {
                                 href={item.href}
                                 onClick={() => setActiveNav(item.href)}
                                 className={`flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-all ${isActive
-                                        ? 'bg-primary-700 text-white'
-                                        : 'text-slate-600 hover:bg-slate-100'
+                                    ? 'bg-primary-700 text-white'
+                                    : 'text-slate-600 hover:bg-slate-100'
                                     }`}
                             >
                                 <Icon className="text-xl" />
