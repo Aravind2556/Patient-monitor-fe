@@ -260,7 +260,7 @@ function Layout({ children }) {
                 {/* Header with Controls & Data Cards */}
                 <div className="bg-white border-b border-slate-200 shadow-sm p-4 space-y-4">
                     {/* Toggle Switches */}
-                    <div className="flex flex-wrap items-center justify-center gap-4 py-2 md:py-5">
+                    <div className="flex flex-wrap items-center justify-center gap-4 py-2">
                         <div className="flex items-center flex-col gap-2">
                             <ToggleSwitch
                                 data={compressorStatus}
@@ -312,13 +312,14 @@ function Layout({ children }) {
                                         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100 text-primary-700">
                                             <Icon className="text-xl" />
                                         </div>
-                                    </div>
-                                    <div>
-                                        <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">{item.label}</p>
                                         <p className="text-2xl font-bold text-slate-900 mt-1">
                                             {item.value || '—'}
                                             <span className="text-sm font-normal text-slate-500 ml-1">{item.unit}</span>
                                         </p>
+                                    </div>
+                                    <div>
+                                        <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">{item.label}</p>
+                                        
                                     </div>
                                     <div className="absolute -right-2 -bottom-2 h-16 w-16 rounded-full bg-primary-50 opacity-30"></div>
                                 </div>
