@@ -129,29 +129,28 @@ function Layout({ children }) {
     const toggleSwitches = (type, status) => {
         if (switchesDisabled) return;
 
-        const next = !status;
+        const prev = {
+            compressor: compressorStatus,
+            heater: heaterStatus,
+            vibrator: vibratorStatus,
+        };
 
-        let queryParams = "";
+        const nextStates = {
+            compressor: type === "compressor" ? !compressorStatus : compressorStatus,
+            heater: type === "heater" ? !heaterStatus : heaterStatus,
+            vibrator: type === "vibrator" ? !vibratorStatus : vibratorStatus,
+        };
 
-        switch (type) {
-            case "compressor":
-                setCompressorStatus(next);
-                queryParams = `&field1=${next ? 1 : 0}`;
-                break;
-            case "heater":
-                setHeaterStatus(next);
-                queryParams = `&field2=${next ? 1 : 0}`;
-                break;
-            case "vibrator":
-                setVibratorStatus(next);
-                queryParams = `&field3=${next ? 1 : 0}`;
-                break;
-            default:
-                return;
-        }
+        // Optimistically update local state for all three
+        setCompressorStatus(nextStates.compressor);
+        setHeaterStatus(nextStates.heater);
+        setVibratorStatus(nextStates.vibrator);
+
+        // Send all three fields so untouched toggles stay unchanged on ThingSpeak
+        const queryParams = `&field1=${nextStates.compressor ? 1 : 0}&field2=${nextStates.heater ? 1 : 0}&field3=${nextStates.vibrator ? 1 : 0}`;
 
         setSwitchesDisabled(true);
-        setCountdown(13);
+        setCountdown(16);
 
         fetch(`${writeThinkSpeakURL}${queryParams}`)
             .then(res => res.json())
@@ -159,38 +158,18 @@ function Layout({ children }) {
                 console.log("ThinkSpeak update response:", data);
                 if (!(data > 0)) {
                     alert("Failed to update device status!");
-                    // revert state if failed
-                    switch (type) {
-                        case "compressor":
-                            setCompressorStatus(status);
-                            break;
-                        case "heater":
-                            setHeaterStatus(status);
-                            break;
-                        case "vibrator":
-                            setVibratorStatus(status);
-                            break;
-                        default:
-                            break;
-                    }
+                    // revert all if failed
+                    setCompressorStatus(prev.compressor);
+                    setHeaterStatus(prev.heater);
+                    setVibratorStatus(prev.vibrator);
                 }
             })
             .catch(err => {
                 console.log("Error updating ThinkSpeak:", err);
                 // revert on error
-                switch (type) {
-                    case "compressor":
-                        setCompressorStatus(status);
-                        break;
-                    case "heater":
-                        setHeaterStatus(status);
-                        break;
-                    case "vibrator":
-                        setVibratorStatus(status);
-                        break;
-                    default:
-                        break;
-                }
+                setCompressorStatus(prev.compressor);
+                setHeaterStatus(prev.heater);
+                setVibratorStatus(prev.vibrator);
             });
     }
 
@@ -319,7 +298,7 @@ function Layout({ children }) {
                                     </div>
                                     <div>
                                         <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">{item.label}</p>
-                                        
+
                                     </div>
                                     <div className="absolute -right-2 -bottom-2 h-16 w-16 rounded-full bg-primary-50 opacity-30"></div>
                                 </div>
