@@ -5,10 +5,10 @@ import { Vibration } from './Vibration'
 
 export const Session = () => {
   return (
-    <div>
-        <Compressor />
-        {/* <HeatTherapy />
-        <Vibration /> */}
+    <div className=' space-y-10'>
+      <Compressor />
+      <HeatTherapy />
+      <Vibration />
     </div>
   )
 }
