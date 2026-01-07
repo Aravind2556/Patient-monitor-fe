@@ -202,8 +202,8 @@ function Layout({ children }) {
                 {/* Header with Controls & Data Cards */}
                 <div className="bg-white border-b border-slate-200 shadow-sm p-4 space-y-4">
                     {/* Toggle Switches */}
-                    <div className="flex flex-wrap items-center gap-4">
-                        <div className="flex items-center gap-2">
+                    <div className="flex flex-wrap items-center justify-center gap-4 py-2 md:py-5">
+                        <div className="flex items-center flex-col gap-2">
                             <ToggleSwitch
                                 data={compressorStatus}
                                 setData={setCompressorStatus}
@@ -211,9 +211,9 @@ function Layout({ children }) {
                                 toggleSwitches={toggleSwitches}
                                 disabled={switchesDisabled}
                             />
-                            <span className="text-sm font-semibold text-slate-700">Compressor</span>
+                            <span className="italic font-semibold text-slate-700">Compressor</span>
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center flex-col gap-2">
                             <ToggleSwitch
                                 data={heaterStatus}
                                 setData={setHeaterStatus}
@@ -221,9 +221,9 @@ function Layout({ children }) {
                                 toggleSwitches={toggleSwitches}
                                 disabled={switchesDisabled}
                             />
-                            <span className="text-sm font-semibold text-slate-700">Heater</span>
+                            <span className="italic font-semibold text-slate-700">Heater</span>
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center flex-col gap-2">
                             <ToggleSwitch
                                 data={vibratorStatus}
                                 setData={setVibratorStatus}
@@ -231,10 +231,10 @@ function Layout({ children }) {
                                 toggleSwitches={toggleSwitches}
                                 disabled={switchesDisabled}
                             />
-                            <span className="text-sm font-semibold text-slate-700">Vibrator</span>
+                            <span className="italic font-semibold text-slate-700">Vibrator</span>
                         </div>
                         {switchesDisabled && (
-                            <div className="ml-auto flex items-center gap-2 rounded-full bg-amber-50 px-3 py-1.5 text-xs font-semibold text-amber-700 border border-amber-200">
+                            <div className="flex items-center gap-2 rounded-full bg-amber-50 px-3 py-1.5 text-xs font-semibold text-amber-700 border border-amber-200">
                                 <span className="flex h-2 w-2">
                                     <span className="absolute inline-flex h-2 w-2 animate-ping rounded-full bg-amber-400 opacity-75"></span>
                                     <span className="relative inline-flex h-2 w-2 rounded-full bg-amber-500"></span>
