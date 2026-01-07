@@ -6,7 +6,8 @@ import { FaEye } from "react-icons/fa";
 import { FaRegEdit } from "react-icons/fa";
 import { renderCapitalize } from '../../utils/renderCaptilize,js';
 import PatientRegister from './PatientRegister';
-
+import { HiDownload } from "react-icons/hi";
+import { vibrationDownload } from '../../services/Download';
 
 
 function DoctorHomePage() {
@@ -60,6 +61,11 @@ function DoctorHomePage() {
     await deletePatient({ BeURL, id })
   }
 
+
+  // Download Vibration
+  const VibratioDownload = async (id) => {
+    await vibrationDownload({ BeURL, id })
+  }
 
   return (
 
@@ -118,7 +124,7 @@ function DoctorHomePage() {
                   <td className="p-3 whitespace-nowrap border text-center">{pat.email || '-'}</td>
                   <td className="p-3 whitespace-nowrap border text-center">{pat.age || '-'}</td>
 
-                  <td className="p-3 flex gap-3 whitespace-nowrap justify-center">
+                  <td className="p-3 flex gap-3 whitespace-nowrap justify-center items-center">
                     <FaEye
                       className="text-teal-600 text-lg cursor-pointer"
                       title="View Job"
@@ -136,8 +142,24 @@ function DoctorHomePage() {
                         onClick={() => handleDelete(pat._id)}
                       />
                     )}
+                    <button
+                      className='flex items-center justify-center px-2 py-2.5 bg-gradient-to-r from-sky-500 to-sky-600 hover:from-sky-700 hover:to-sky-600 text-white font-bold text-sm rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 active:scale-95  gap-2 w-full md:w-auto'
+                    >
+                      <HiDownload className='text-base' />
+                      Compression</button>
 
+                    <button
+                      className='flex items-center justify-center px-2 py-2.5 bg-gradient-to-r from-sky-500 to-sky-600 hover:from-sky-700 hover:to-sky-600 text-white font-bold text-sm rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 active:scale-95  gap-2 w-full md:w-auto'
+                    >
+                      <HiDownload className='text-base' />
+                      Heat Theorpy</button>
 
+                    <button
+                      onClick={() => VibratioDownload(pat.id)}
+                      className='flex items-center justify-center px-2 py-2.5 bg-gradient-to-r from-sky-500 to-sky-600 hover:from-sky-700 hover:to-sky-600 text-white font-bold text-sm rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 active:scale-95  gap-2 w-full md:w-auto'
+                    >
+                      <HiDownload className='text-base' />
+                      Vibration</button>
 
                   </td>
                 </tr>
