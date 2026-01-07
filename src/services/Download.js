@@ -1,5 +1,8 @@
-export const vibrationDownload = async ({ BeURL, id, type }) => {
-    if (type === "vibration") {
+export const vibrationDownload = async ({ BeURL, id, isDownload ,type}) => {
+
+
+    if (type === "vibration" && isDownload) {
+
         try {
             const res = await fetch(`${BeURL}/fetchVibration/${id}`, {
                 method: 'GET',
@@ -23,11 +26,12 @@ export const vibrationDownload = async ({ BeURL, id, type }) => {
             // Cleanup
             a.remove();
             window.URL.revokeObjectURL(url);
-
-        } catch (err) {
+        }
+        catch (err) {
             console.error("Error in downloading vibration excel:", err);
             alert("Failed to download Excel file");
         }
+
     }
     else if (type === "heat") {
         try {
