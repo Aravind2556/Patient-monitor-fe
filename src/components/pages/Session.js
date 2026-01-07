@@ -7,8 +7,8 @@ export const Session = () => {
   return (
     <div>
         <Compressor />
-        <HeatTherapy />
-        <Vibration />
+        {/* <HeatTherapy />
+        <Vibration /> */}
     </div>
   )
 }

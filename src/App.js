@@ -34,7 +34,6 @@ function App() {
         <Route path='/session' element={<Session />} />
         <Route path='*' element={<NotFound/>} />
       </Routes>
-
     </div>
   );
 }
