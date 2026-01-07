@@ -27,7 +27,7 @@ export const Vibration = () => {
 
 
     const VibratioDownload = async (id) => {
-        await vibrationDownload({ BeURL, id, isDownload: true })
+        await vibrationDownload({ BeURL, id, isDownload: true,type : 'vibration' })
     }
 
     return (
