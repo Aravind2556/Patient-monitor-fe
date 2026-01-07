@@ -66,8 +66,8 @@ function DoctorHomePage() {
 
 
   // Download Vibration
-  const VibratioDownload = async (id,type) => {
-    await vibrationDownload({ BeURL, id ,type })
+  const VibratioDownload = async (id, type,) => {
+    await vibrationDownload({ BeURL, id, isDownload: true, type })
   }
 
   // Download Heat Therapy
@@ -153,7 +153,7 @@ function DoctorHomePage() {
                       />
                     )}
                     <button
-                      onClick={() => VibratioDownload(pat.id , 'compress')}
+                      onClick={() => VibratioDownload(pat.id, 'compress')}
                       className='flex items-center justify-center px-2 py-2.5 bg-gradient-to-r from-sky-500 to-sky-600 hover:from-sky-700 hover:to-sky-600 text-white font-bold text-sm rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 active:scale-95  gap-2 w-full md:w-auto'
                     >
                       <HiDownload className='text-base' />
@@ -167,7 +167,7 @@ function DoctorHomePage() {
                       Heat Therapy</button>
 
                     <button
-                      onClick={() => VibratioDownload(pat.id)}
+                      onClick={() => VibratioDownload(pat.id, 'vibration')}
                       className='flex items-center justify-center px-2 py-2.5 bg-gradient-to-r from-sky-500 to-sky-600 hover:from-sky-700 hover:to-sky-600 text-white font-bold text-sm rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 active:scale-95  gap-2 w-full md:w-auto'
                     >
                       <HiDownload className='text-base' />

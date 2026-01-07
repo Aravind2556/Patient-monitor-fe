@@ -78,7 +78,7 @@ export const vibrationDownload = async ({ BeURL, id, isDownload, type }) => {
             alert("Failed to download Excel file: " + err.message);
         }
     }
-    else if (type === "compress") {
+    else if (type === "compress" && isDownload) {
         try {
             // Request Excel by passing download=excel according to backend contract
             const res = await fetch(`${BeURL}/fetchcompressor/${id}?download=excel`, {
