@@ -118,7 +118,7 @@ function Layout({ children }) {
         }
 
         setSwitchesDisabled(true);
-        setCountdown(10);
+        setCountdown(13);
 
         fetch(`${writeThinkSpeakURL}${queryParams}`)
             .then(res => res.json())
