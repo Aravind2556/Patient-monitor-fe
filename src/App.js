@@ -12,6 +12,7 @@ import { Alert } from './components/pages/Alert';
 import { Session } from './components/pages/Session';
 import NotFound from './components/pages/NotFound';
 import PatientDashboard from './components/pages/PatientDashboard';
+import Layout from './components/blocks/Layout';
 
 
 function App() {
@@ -28,21 +29,27 @@ function App() {
         return <DoctorDashboard />
       }
       else if(currentUser.role === 'patient'){
-        return <PatientChart />
+        return <Layout><PatientChart /></Layout>
       }
     }
     return <Login />
   }
 
+  const renderPatientRouter = (Component) => {
+    if(isAuth && currentUser.role === 'patient'){
+      return <Layout><Component /></Layout>
+    }
+  }
+
   return (
     <div className="container-fluid p-0">
-      <Header />
+      { (!isAuth || currentUser?.role === 'doctor') && <Header /> }
       <Routes>
         <Route path="/" element={renderHomepage()} />
         <Route path="/login" element={renderHomepage()} />
         <Route path='/register' element={renderHomepage()} />
-        <Route path='/alerts' element={<Alert />} />
-        <Route path='/live-therapy' element={<Session />} />
+        <Route path='/alerts' element={renderPatientRouter(Alert)} />
+        <Route path='/live-therapy' element={renderPatientRouter(Session)} />
         <Route path='*' element={<NotFound/>} />
       </Routes>
 

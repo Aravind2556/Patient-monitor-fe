@@ -13,7 +13,7 @@ import LoadingPage from '../pages/Loading';
 
 function Layout({ children }) {
 
-    const { isAuth, currentUser, setIsAuth, setCurrentUser, BeURL } = useContext(DContext)
+    const { isAuth, currentUser, setIsAuth, setCurrentUser, BeURL, handleLogout } = useContext(DContext)
     const [activeNav, setActiveNav] = useState(window.location.pathname)
 
     const navItems = [
@@ -133,21 +133,6 @@ function Layout({ children }) {
             })
             .catch(err => {
                 console.log("Error updating ThinkSpeak:", err);
-            });
-    }
-
-    const handleLogout = () => {
-        fetch(`${BeURL}/logout`, {
-            method: 'POST',
-            credentials: 'include'
-        })
-            .then(() => {
-                setIsAuth(false);
-                setCurrentUser(null);
-                window.location.href = '/login';
-            })
-            .catch(err => {
-                console.log("Error logging out:", err);
             });
     }
 
