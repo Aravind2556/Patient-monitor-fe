@@ -52,7 +52,6 @@ function App() {
         <Route path='/live-therapy' element={renderPatientRouter(Session)} />
         <Route path='*' element={<NotFound/>} />
       </Routes>
-
     </div>
   );
 }
