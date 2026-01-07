@@ -28,7 +28,7 @@ export const Vibration = () => {
     return (
         <div>
             {/* Scrollable Table */}
-            <div className="overflow-x-auto bg-white rounded-xl shadow-md">
+            <div className="overflow-x-auto bg-white rounded-xl shadow-md max-h-72 overflow-y-auto">
                 <div className="">
                     <table className="min-w-full border-collapse">
                         <thead className="bg-teal-500 text-white sticky top-0 z-10">
