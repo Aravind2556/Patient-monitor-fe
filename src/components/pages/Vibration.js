@@ -46,11 +46,11 @@ export const Vibration = () => {
                                     key={vib.sessionId}
                                     className="hover:bg-teal-50 transition border-b border-slate-100 font-semibold"
                                 >
-                                    <td className="p-3 text-center whitespace-nowrap border">{vib.sessionId}</td>
+                                    <td className="p-3 text-center whitespace-nowrap border">{vib.SessionId}</td>
 
-                                    <td className="p-3 whitespace-nowrap border text-center capitalize">{vib.date || '-'}</td>
-                                    <td className="p-3 whitespace-nowrap border text-center">{vib?.duration ? `${vib?.duration}m` : '-'}</td>
-                                    <td className="p-3 whitespace-nowrap border text-center">{`${vib.averageTemp}°C` || '-'}</td>
+                                    <td className="p-3 whitespace-nowrap border text-center capitalize">{new Date(vib.Date).toLocaleDateString() || '-'}</td>
+                                    <td className="p-3 whitespace-nowrap border text-center">{vib?.Duration ? `${vib?.duration}m` : '-'}</td>
+                                    <td className="p-3 whitespace-nowrap border text-center">{`${vib.AverageTemp}°C` || '-'}</td>
 
                                 </tr>
                             )) : <tr><td colSpan="9" className="text-center p-4">No Patient Vibration History found</td></tr>}
