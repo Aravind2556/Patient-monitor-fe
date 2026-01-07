@@ -80,20 +80,13 @@ export const vibrationDownload = async ({ BeURL, id, isDownload, type }) => {
             alert("Failed to download Excel file: " + err.message);
         }
     }
-    else if (type === "compress") {
+    else if (type === "compress" && isDownload) {
         try {
-            const res = await fetch(`${BeURL}/fetchcompressor/${id}?type=${type}`,{
+            const res = await fetch(`${BeURL}/fetchcompressor/${id}?type=${type}?isDownload=${isDownload}`, {
                 method: "GET",
                 credentials: "include",
             });
-            const contentType = res.headers.get("content-type") || "";
-            //If JSON response → no data / error → STOP download
-            if (contentType.includes("application/json")) {
-                const data = await res.json();
-                alert(data.message);
-                return;
-            }
-            
+           
             if (!res.ok) {
                 throw new Error("Download failed");
             }

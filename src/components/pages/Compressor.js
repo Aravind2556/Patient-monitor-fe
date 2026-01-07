@@ -3,31 +3,32 @@ import { DContext } from '../../context/Datacontext'
 import { vibrationDownload } from '../../services/Download'
 
 export const Compressor = () => {
-  const { BeURL, currentUser }=useContext(DContext)
+  const { BeURL, currentUser } = useContext(DContext)
   const [compressionHistory, setCompressionHistory] = useState([])
 
-      useEffect(()=>{
-          if(BeURL){
-            fetch(`${BeURL}/fetchcompressor/${currentUser.id}`,{
-                  method : 'GET',
-                  credentials: 'include'
-              })
-              .then(res=>res.json())
-              .then(data=>{
-                if (data.success) {
-                  setCompressionHistory(data.patientCompression)
-                }
-                else{
-                  console.log(data.message)
-                }
-              })
+  useEffect(() => {
+    if (BeURL) {
+      fetch(`${BeURL}/fetchcompressor/${currentUser.id}`, {
+        method: 'GET',
+        credentials: 'include'
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            setCompressionHistory(data.patientCompression)
           }
-      }, [BeURL])
+          else {
+            console.log(data.message)
+          }
+        })
+    }
+  }, [BeURL])
 
 
-        const VibratioDownload = async (id) => {
-          await vibrationDownload({ BeURL, id , type : 'compress'})
-        }
+  const VibratioDownload = async (id, type) => {
+    console.log("id", id, type)
+    await vibrationDownload({ BeURL, id, isDownload: true, type })
+  }
 
 
   return (
@@ -35,7 +36,7 @@ export const Compressor = () => {
       {/* Scrollable Table */}
       <div className='flex justify-between items-center font-semibold mb-4'>
         <h2 className='text-xl'>compression</h2>
-        <button onClick={() => VibratioDownload(currentUser?.id)} className='bg-primary-700 text-white px-4 py-2 rounded-xl'>Download</button>
+        <button onClick={() => VibratioDownload(currentUser?.id, 'compress')} className='bg-primary-700 text-white px-4 py-2 rounded-xl'>Download</button>
       </div>
       <div className="overflow-x-auto bg-white rounded-xl shadow-md max-h-72 overflow-y-auto">
         <div className="">
