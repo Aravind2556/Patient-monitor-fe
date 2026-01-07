@@ -19,9 +19,9 @@ function App() {
 
   const { isAuth, currentUser } = useContext(DContext)
 
-//   if(isAuth===null || !currentUser){
-//     return <LoadingPage/>
-//   }
+  if(isAuth===null || currentUser == null){
+    return <LoadingPage/>
+  }
 
   const renderHomepage = () => {
     if(isAuth){

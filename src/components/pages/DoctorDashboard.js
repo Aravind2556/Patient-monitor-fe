@@ -8,10 +8,11 @@ import { renderCapitalize } from '../../utils/renderCaptilize,js';
 import PatientRegister from './PatientRegister';
 import { HiDownload } from "react-icons/hi";
 import { vibrationDownload } from '../../services/Download';
+import LoadingPage from './Loading';
 
 
 function DoctorHomePage() {
-  const { BeURL, currentUser } = useContext(DContext);
+  const { BeURL, currentUser, isAuth } = useContext(DContext);
   const [allPatients, setAllPatient] = useState([])
   const [viewPatient, setViewPatient] = useState(false)
   const [showpatient, setShowPatient] = useState(false)
@@ -39,8 +40,10 @@ function DoctorHomePage() {
   }
 
   useEffect(() => {
-    fetchAllPatients({ BeURL, setAllPatient })
-  }, [BeURL])
+    if (BeURL && isAuth === true && currentUser?.role === 'doctor') {
+      fetchAllPatients({ BeURL, setAllPatient })
+    }
+  }, [BeURL, isAuth, currentUser?.role])
 
 
   const viewPatients = async (id) => {
@@ -66,6 +69,13 @@ function DoctorHomePage() {
   const VibratioDownload = async (id,type) => {
     await vibrationDownload({ BeURL, id ,type })
   }
+
+  // Download Heat Therapy
+  const HeatTherapyDownload = async (id) => {
+    await vibrationDownload({ BeURL, id, type: 'heat' })
+  }
+
+  if (isAuth == null || currentUser == null) return <LoadingPage />
 
   return (
 
@@ -150,10 +160,11 @@ function DoctorHomePage() {
                       Compression</button>
 
                     <button
+                      onClick={() => HeatTherapyDownload(pat.id)}
                       className='flex items-center justify-center px-2 py-2.5 bg-gradient-to-r from-sky-500 to-sky-600 hover:from-sky-700 hover:to-sky-600 text-white font-bold text-sm rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 active:scale-95  gap-2 w-full md:w-auto'
                     >
                       <HiDownload className='text-base' />
-                      Heat Theorpy</button>
+                      Heat Therapy</button>
 
                     <button
                       onClick={() => VibratioDownload(pat.id)}

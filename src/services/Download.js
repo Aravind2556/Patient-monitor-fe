@@ -1,9 +1,9 @@
-export const vibrationDownload = async ({ BeURL, id, isDownload ,type}) => {
+export const vibrationDownload = async ({ BeURL, id, isDownload, type }) => {
 
 
     if (type === "vibration" && isDownload) {
         try {
-            const res = await fetch(`${BeURL}/fetchVibration/${id}`, {
+            const res = await fetch(`${BeURL}/fetchVibration/${id}?isDownload=${isDownload}`, {
                 method: 'GET',
                 credentials: 'include'
             });
@@ -44,7 +44,22 @@ export const vibrationDownload = async ({ BeURL, id, isDownload ,type}) => {
                 throw new Error('Failed to download Excel');
             }
 
+            // Check if response is actually an Excel file
+            const contentType = res.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
+                // Backend returned JSON (likely an error), not Excel
+                const data = await res.json();
+                alert(data.message || 'No heat therapy data available for download');
+                return;
+            }
+
             const blob = await res.blob();
+
+            // Verify blob is not empty or too small
+            if (blob.size < 100) {
+                alert('No heat therapy data available for this patient');
+                return;
+            }
 
             // Create download link
             const url = window.URL.createObjectURL(blob);
@@ -60,8 +75,8 @@ export const vibrationDownload = async ({ BeURL, id, isDownload ,type}) => {
             window.URL.revokeObjectURL(url);
 
         } catch (err) {
-            console.error("Error in downloading vibration excel:", err);
-            alert("Failed to download Excel file");
+            console.error("Error in downloading heat therapy excel:", err);
+            alert("Failed to download Excel file: " + err.message);
         }
     }
     else if (type === "compress") {

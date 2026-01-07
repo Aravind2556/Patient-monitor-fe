@@ -29,7 +29,7 @@ const PatientRegister = () => {
                         'Content-Type': 'application/json',
                     },
                     credentials: "include",
-                    body: JSON.stringify({ fullname: name, email, contact, password, age: Number(age), gender }),
+                    body: JSON.stringify({ fullname: name, email, contact, password, age: Number(age), gender, type: 'create' }),
                 })
                     .then(res => res.json())
                     .then(data => {
