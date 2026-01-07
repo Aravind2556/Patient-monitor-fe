@@ -1,10 +1,10 @@
-export const vibrationDownload = async ({ BeURL, id, isDownload ,type}) => {
+export const vibrationDownload = async ({ BeURL, id, isDownload, type }) => {
 
 
     if (type === "vibration" && isDownload) {
 
         try {
-            const res = await fetch(`${BeURL}/fetchVibration/${id}`, {
+            const res = await fetch(`${BeURL}/fetchVibration/${id}?isDownload=${isDownload}`, {
                 method: 'GET',
                 credentials: 'include'
             });
