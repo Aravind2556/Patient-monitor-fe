@@ -46,8 +46,8 @@ function App() {
       { (!isAuth || currentUser?.role === 'doctor') && <Header /> }
       <Routes>
         <Route path="/" element={renderHomepage()} />
-        <Route path="/login" element={renderHomepage()} />
-        <Route path='/register' element={renderHomepage()} />
+        <Route path="/login" element={isAuth ? renderHomepage() : <Login />} />
+        <Route path='/register' element={isAuth ? renderHomepage() : <Register />} />
         <Route path='/alerts' element={renderPatientRouter(Alert)} />
         <Route path='/live-therapy' element={renderPatientRouter(Session)} />
         <Route path='*' element={<NotFound/>} />
