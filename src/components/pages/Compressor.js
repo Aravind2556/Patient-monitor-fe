@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { DContext } from '../../context/Datacontext'
+import { vibrationDownload } from '../../services/Download'
 
 export const Compressor = () => {
   const { BeURL, currentUser }=useContext(DContext)
   const [compressionHistory, setCompressionHistory] = useState([])
 
-  
       useEffect(()=>{
           if(BeURL){
             fetch(`${BeURL}/fetchcompressor/${currentUser.id}`,{
@@ -23,13 +23,18 @@ export const Compressor = () => {
           }
       }, [BeURL])
 
-  console.log("compressionHistory", compressionHistory)
+
+        const VibratioDownload = async (id) => {
+          await vibrationDownload({ BeURL, id , type : 'compress'})
+        }
+
+
   return (
     <div>
       {/* Scrollable Table */}
       <div className='flex justify-between items-center font-semibold mb-4'>
         <h2 className='text-xl'>compression</h2>
-        <button className='bg-primary-700 text-white px-4 py-2 rounded-xl'>Download</button>
+        <button onClick={() => VibratioDownload(currentUser?.id)} className='bg-primary-700 text-white px-4 py-2 rounded-xl'>Download</button>
       </div>
       <div className="overflow-x-auto bg-white rounded-xl shadow-md max-h-72 overflow-y-auto">
         <div className="">
