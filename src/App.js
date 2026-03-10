@@ -22,7 +22,7 @@ function App() {
   if(isAuth===null || currentUser == null){
     return <LoadingPage/>
   }
-
+ 
   const renderHomepage = () => {
     if(isAuth){
       if(currentUser.role === 'doctor'){

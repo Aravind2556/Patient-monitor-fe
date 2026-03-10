@@ -92,7 +92,7 @@ function Layout({ children }) {
     // Fetch device statuses (compressor/heater/vibrator) from ThingSpeak channel 3220683
     // Uses the last entry's field1, field2, field3 where "1" indicates ON/true
     useEffect(() => {
-        const statusURL = 'https://api.thingspeak.com/channels/3220683/feeds.json?api_key=3D0IZSLC23R5ZK3B';
+        const statusURL = 'https://api.thingspeak.com/channels/3293038/feeds.json?api_key=AMOGFA8L7KFL58D0';
         const fetchStatus = () => {
             fetch(statusURL)
                 .then(res => res.json())

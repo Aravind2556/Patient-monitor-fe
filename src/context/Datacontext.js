@@ -16,7 +16,7 @@ const DataContext = ({ children }) => {
     const [fieldTwo, setFieldTwo] = useState(null)
     const [fieldThree, setFieldThree] = useState(null)
     const [fieldFour, setFieldFour] = useState(null)
-    // const [fieldFive, setFieldFive] = useState(null)
+    const [fieldFive, setFieldFive] = useState(null)
 
 
     const [recentFieldOne, setRecentFieldOne] = useState(null)
@@ -29,6 +29,11 @@ const DataContext = ({ children }) => {
     const [recentFieldSix,setRecentFieldSix]=useState(null)
     const [recentFieldSeven, setRecentFieldSeven] = useState(null)
     const [recentFieldEight, setRecentFieldEight]=useState(null)
+
+    const [userData,setUserData]=useState([])
+    const [predictData,setPredictData]=useState(null)
+
+
 
 
 
@@ -75,6 +80,32 @@ const DataContext = ({ children }) => {
             })
     }
 
+const fetchPredict = () => {
+  fetch(`${BeURL}/fetch-predict`, {
+    method: 'GET'
+  })
+  .then(res => res.json())
+  .then(data => {
+    setPredictData(data);
+  })
+  .catch(err => {
+    console.log("Error in fetch AI-ML predict", err);
+  });
+};
+
+useEffect(() => {
+  // Fetch immediately on load
+  fetchPredict();
+
+  // Set interval to fetch every 5 seconds
+  const interval = setInterval(() => {
+    fetchPredict();
+  }, 5000);
+
+  // Cleanup interval when component unmounts
+  return () => clearInterval(interval);
+}, [])
+
 
     const controls = {
         show: true,
@@ -96,7 +127,7 @@ const DataContext = ({ children }) => {
             fetch(THINGSPEAK_URL)
                 .then(res => res.json())
                 .then(data => {
-                    console.log("data:", data)
+                    setUserData(data)
                     if (data && data.feeds && data.feeds.length > 0) {
                         const xAxis = data.feeds.map(feed => new Date(feed.created_at).getTime())
 
@@ -128,6 +159,15 @@ const DataContext = ({ children }) => {
                             seriesName: 'SPO2'
                         })
 
+                        setFieldFive({
+                            "x-axis": xAxis,
+                            "y-axis": data.feeds.map(feed => Number(feed.field5) || 0),
+                            color: "Fuchsia",
+                            seriesName: 'userId'
+                        })
+
+
+
                         // setFieldFive({
                         //     "x-axis": xAxis,
                         //     "y-axis": data.feeds.map(feed => Number(feed.field5) || 0),
@@ -146,6 +186,9 @@ const DataContext = ({ children }) => {
 
                         const recentFieldFour = data.feeds.slice(-1)[0].field4
                         setRecentFieldFour(recentFieldFour)
+
+                        const recentFieldFive = data.feeds.slice(-1)[0].field5
+                        setRecentFieldFive(recentFieldFive)
 
 
                         const recentFieldSix= data.feeds.slice(-1)[0].field6
@@ -207,7 +250,7 @@ const DataContext = ({ children }) => {
     }, [THINGSPEAK_URL]);
 
 
-    const data = { isAuth, currentUser, setIsAuth, setCurrentUser, BeURL, handleLogout, fieldOne, fieldTwo, fieldThree, fieldFour, controls, recentFieldOne, recentFieldTwo, recentFieldThree, recentFieldFour }
+    const data = { isAuth, currentUser, setIsAuth, setCurrentUser, BeURL, handleLogout, fieldOne, fieldTwo, fieldThree, fieldFour, controls, recentFieldOne, recentFieldTwo, recentFieldThree, recentFieldFour ,recentFieldFive ,fieldFive , userData , predictData}
 
     return (
         <DContext.Provider value={data}>
